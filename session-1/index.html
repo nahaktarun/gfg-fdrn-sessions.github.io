@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Request-Response Demo</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+        background-color: #f4f4f4;
+      }
+      .container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      button {
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+      #result {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        background-color: #f9f9f9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Request-Response Demo</h1>
+      <p>
+        Click the button below to send a request to a public API and see the
+        response.
+      </p>
+      <button onclick="makeRequest()">Get Random Post</button>
+      <div id="result"></div>
+    </div>
+
+    <script>
+      function makeRequest() {
+        // Display "Loading..." while waiting for the response
+        document.getElementById("result").innerHTML = "Loading...";
+
+        // Make a request to the JSONPlaceholder API
+        fetch(
+          "https://jsonplaceholder.typicode.com/posts/" +
+            Math.floor(Math.random() * 100 + 1)
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            // Display the response data
+            document.getElementById("result").innerHTML = `
+                        <h2>Post #${data.id}</h2>
+                        <h3>${data.title}</h3>
+                        <p>${data.body}</p>
+                    `;
+          })
+          .catch((error) => {
+            // Display any errors
+            document.getElementById("result").innerHTML =
+              "Error: " + error.message;
+          });
+      }
+    </script>
+  </body>
+</html>
